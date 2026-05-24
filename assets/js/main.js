@@ -96,23 +96,28 @@ window.addEventListener('scroll', scrollUp)
 /*==================== DARK LIGHT THEME ====================*/
 const themeButton = document.getElementById('theme-button')
 const darkTheme = 'dark-theme'
-const iconTheme = 'uil-sun'
 
 const selectedTheme = localStorage.getItem('selected-theme')
-const selectedIcon = localStorage.getItem('selected-icon')
 
 const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
-const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'uil-moon' : 'uil-sun'
+
+function setThemeIcon(isDark) {
+    if (isDark) {
+        themeButton.classList.add('uil-sun')
+        themeButton.classList.remove('uil-moon')
+    } else {
+        themeButton.classList.add('uil-moon')
+        themeButton.classList.remove('uil-sun')
+    }
+}
 
 if (selectedTheme) {
     document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
-    themeButton.classList[selectedTheme === 'dark' ? 'remove' : 'add']('uil-moon')
-    themeButton.classList[selectedTheme === 'dark' ? 'add' : 'remove']('uil-sun')
+    setThemeIcon(selectedTheme === 'dark')
 }
 
 themeButton.addEventListener('click', () => {
     document.body.classList.toggle(darkTheme)
-    themeButton.classList.toggle(iconTheme)
+    setThemeIcon(getCurrentTheme() === 'dark')
     localStorage.setItem('selected-theme', getCurrentTheme())
-    localStorage.setItem('selected-icon', getCurrentIcon())
 })
